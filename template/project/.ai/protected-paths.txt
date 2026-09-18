@@ -1,0 +1,7 @@
+# Paths the implementer must not change (PowerShell -like patterns, repo-relative, forward slashes).
+# Changing one is a critical finding. The pipeline's own files (scripts/ai-pipeline.ps1, .ai/*,
+# AGENTS.md, GEMINI.md, CLAUDE.md) are always protected; list only this project's files here.
+# Examples:
+# docs/published/*
+# data/raw/*
+# *.lock

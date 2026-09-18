@@ -1,0 +1,13 @@
+# Paths agents must not open, list or search unless the plan points there (saves tokens).
+# One entry per line; free text is fine (it is pasted into the agents' prompts).
+# .git/ and other runs under .ai/logs/ are always excluded; binary files are always excluded.
+node_modules/
+.venv/
+venv/
+dist/
+build/
+bin/
+obj/
+coverage/
+*.min.js
+*.lock / package-lock.json (read only if the task is about dependencies)

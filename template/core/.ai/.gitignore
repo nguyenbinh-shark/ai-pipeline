@@ -1,0 +1,4 @@
+# Per-run output of scripts/ai-pipeline.ps1
+logs/
+review.json
+cart_pole_all-main/

@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ai-pipeline review",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["status", "summary", "recommendation", "critical", "major", "minor", "tests"],
+  "properties": {
+    "status": { "type": "string", "enum": ["PASS", "FAIL"] },
+    "summary": { "type": "string" },
+    "recommendation": {
+      "type": "string",
+      "enum": ["accept", "fix", "escalate_implementer", "escalate_lead"],
+      "description": "accept = PASS; fix = the implementer can fix the blocking findings; escalate_implementer = the implementer model is not capable enough for this task; escalate_lead = the plan itself must be reconsidered"
+    },
+    "critical": { "type": "array", "items": { "$ref": "#/definitions/finding" } },
+    "major": { "type": "array", "items": { "$ref": "#/definitions/finding" } },
+    "minor": { "type": "array", "items": { "$ref": "#/definitions/finding" } },
+    "tests": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "notes"],
+      "properties": {
+        "status": { "type": "string", "enum": ["PASS", "FAIL", "NOT_RUN"] },
+        "notes": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  },
+  "definitions": {
+    "finding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["severity", "category", "persists", "file", "line", "issue", "reasoning", "suggested_fix"],
+      "properties": {
+        "severity": { "type": "string", "enum": ["critical", "major", "minor"] },
+        "category": {
+          "type": "string",
+          "enum": ["correctness", "regression", "plan-gap", "scope", "validation", "tests", "security", "architecture", "concurrency", "data-corruption", "ambiguous-requirement", "style", "other"]
+        },
+        "persists": { "type": "boolean", "description": "true only if this is the same problem as a blocking finding of the previous round's review and it is still not fixed; false in round 1" },
+        "file": { "type": "string" },
+        "line": { "type": "string", "description": "Line or range such as 42 or 42-51; empty string if not applicable" },
+        "issue": { "type": "string" },
+        "reasoning": { "type": "string" },
+        "suggested_fix": { "type": "string" }
+      }
+    }
+  }
+}
